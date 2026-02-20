@@ -1,0 +1,15 @@
+# Build artifacts
+bin/
+obj/
+
+# User-specific
+*.user
+*.swp
+.vs/
+
+# Local SDK install
+.dotnet/
+dotnet-install.ps1
+
+# Logs
+*.log

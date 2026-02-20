@@ -1,0 +1,116 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Timeline dashboard";
+}
+
+<section class="page-hero">
+    <header>
+        <p class="eyebrow">VibeCoding timeline</p>
+        <h1>JSON-first schedule dashboard</h1>
+        <p>Edit the JSON document on the left to drive the timeline preview on the right. We parse → validate → normalize on every keystroke so the UI never drifts from the source of truth.</p>
+    </header>
+    <div class="hero-meta">
+        <dl>
+            <dt>Runtime</dt>
+            <dd>.NET 10 / Razor Pages</dd>
+        </dl>
+        <dl>
+            <dt>Front-end</dt>
+            <dd>Vanilla JS + CSS custom properties</dd>
+        </dl>
+        <dl>
+            <dt>Deploy</dt>
+            <dd>GitHub Actions → Azure Web App</dd>
+        </dl>
+    </div>
+</section>
+
+<section class="dashboard-grid">
+    <article class="panel panel-editor">
+        <header>
+            <div>
+                <h2>Timeline JSON</h2>
+                <p>Everything you see in the preview comes directly from this document. Keep <code>view</code>, <code>lanes</code>, and <code>items</code> aligned.</p>
+            </div>
+            <output data-role="timeline-status" class="status-badge" aria-live="polite">Waiting for input…</output>
+        </header>
+
+        <div class="editor-toolbar">
+            <div class="button-group">
+                <button type="button" class="btn btn-secondary" data-action="format-json">Format</button>
+                <button type="button" class="btn btn-outline-secondary" data-action="reset-json">Reset</button>
+            </div>
+            <div class="button-group" role="group" aria-label="View mode toggle">
+                <span class="toolbar-label">Mode</span>
+                <button type="button" class="btn btn-outline-primary" data-view-mode="day">Day</button>
+                <button type="button" class="btn btn-outline-primary" data-view-mode="hour">Hour</button>
+            </div>
+        </div>
+
+        <textarea id="timeline-json-editor"
+                  data-role="timeline-json"
+                  spellcheck="false"
+                  class="json-editor">@Model.DefaultJson</textarea>
+
+        <div class="spec-callout">
+            <h3>JSON contract</h3>
+            <ul>
+                <li><code>view.mode</code>: <code>day</code> or <code>hour</code></li>
+                <li><code>view.range</code>: ISO8601 start/end</li>
+                <li><code>lanes[]</code>: id + label (color optional)</li>
+                <li><code>items[]</code>: laneId + start/end or start + durationDays</li>
+            </ul>
+        </div>
+
+        @if (Model.ValidationErrors.Any())
+        {
+            <div class="server-validation">
+                <h4>Server validation</h4>
+                <ul>
+                    @foreach (var error in Model.ValidationErrors)
+                    {
+                        <li>@error</li>
+                    }
+                </ul>
+            </div>
+        }
+    </article>
+
+    <article class="panel panel-preview">
+        <header>
+            <div>
+                <h2>Live preview</h2>
+                <p>
+                    Updates: <span data-role="timeline-updated">not rendered yet</span>
+                </p>
+            </div>
+            <div class="legend">
+                <span class="legend-item status-ok">Valid</span>
+                <span class="legend-item status-warning">Warning</span>
+                <span class="legend-item status-error">Error</span>
+            </div>
+        </header>
+
+        <div class="alert alert-danger d-none" data-role="timeline-errors" role="alert"></div>
+
+        <div class="timeline-surface" data-role="timeline-canvas">
+            <p class="empty-state">Start typing or paste JSON to render the timeline.</p>
+        </div>
+    </article>
+</section>
+
+<section class="panel panel-notes">
+    <h3>Operator checklist</h3>
+    <ul>
+        <li>Secrets live outside Git; never bake them into JSON.</li>
+        <li>Keep changes tight: implement → <code>dotnet build/test</code> → push.</li>
+        <li>Broken JSON keeps the last known-good UI so on-call can react calmly.</li>
+        <li>Day/Hour toggles simply rewrite <code>view.mode</code> in the single JSON source.</li>
+    </ul>
+</section>
+
+@section Scripts
+{
+    <script src="~/js/timeline.js" asp-append-version="true"></script>
+}

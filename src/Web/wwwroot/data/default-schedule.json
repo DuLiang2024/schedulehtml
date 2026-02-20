@@ -1,0 +1,74 @@
+{
+  "view": {
+    "mode": "day",
+    "range": {
+      "start": "2026-02-17T00:00:00-08:00",
+      "end": "2026-02-24T00:00:00-08:00"
+    }
+  },
+  "lanes": [
+    { "id": "design", "label": "Design", "color": "#884EA0" },
+    { "id": "engineering", "label": "Engineering", "color": "#1F618D" },
+    { "id": "qa", "label": "QA", "color": "#117864" },
+    { "id": "launch", "label": "Launch", "color": "#B9770E" }
+  ],
+  "items": [
+    {
+      "id": "design-sync",
+      "laneId": "design",
+      "label": "Concept sync",
+      "start": "2026-02-17T09:00:00-08:00",
+      "end": "2026-02-17T12:00:00-08:00",
+      "status": "done"
+    },
+    {
+      "id": "wireframes",
+      "laneId": "design",
+      "label": "Wireframes",
+      "start": "2026-02-17T12:00:00-08:00",
+      "durationDays": 1.5,
+      "status": "in-progress"
+    },
+    {
+      "id": "api-contract",
+      "laneId": "engineering",
+      "label": "API contract",
+      "start": "2026-02-18T09:00:00-08:00",
+      "end": "2026-02-19T09:00:00-08:00",
+      "status": "in-progress"
+    },
+    {
+      "id": "implementation",
+      "laneId": "engineering",
+      "label": "Implementation",
+      "start": "2026-02-19T09:00:00-08:00",
+      "durationDays": 3,
+      "status": "blocked",
+      "description": "Waiting for upstream API tokens"
+    },
+    {
+      "id": "qa-plan",
+      "laneId": "qa",
+      "label": "QA plan",
+      "start": "2026-02-20T08:00:00-08:00",
+      "end": "2026-02-20T17:00:00-08:00",
+      "status": "not-started"
+    },
+    {
+      "id": "regression",
+      "laneId": "qa",
+      "label": "Regression tests",
+      "start": "2026-02-21T08:00:00-08:00",
+      "durationDays": 1.5,
+      "status": "not-started"
+    },
+    {
+      "id": "launch-review",
+      "laneId": "launch",
+      "label": "Launch review",
+      "start": "2026-02-23T09:00:00-08:00",
+      "end": "2026-02-23T10:30:00-08:00",
+      "status": "not-started"
+    }
+  ]
+}

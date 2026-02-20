@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - schedulehtml</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ScheduleHtml.Web.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="brand-stack">
+                <a class="brand" asp-area="" asp-page="/Index">schedulehtml</a>
+                <span class="stack-badge">JSON timeline</span>
+            </div>
+            <div class="header-meta">
+                <span>.NET 10</span>
+                <span>Azure Web App</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="site-main container" role="main">
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; @DateTimeOffset.UtcNow.Year schedulehtml · JSON is the single source-of-truth.</p>
+        </div>
+    </footer>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
