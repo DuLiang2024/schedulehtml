@@ -8,43 +8,73 @@
     <header>
         <p class="eyebrow">VibeCoding timeline</p>
         <h1>JSON-first schedule dashboard</h1>
-        <p>Edit the JSON document on the left to drive the timeline preview on the right. We parse → validate → normalize on every keystroke so the UI never drifts from the source of truth.</p>
+        <p>Edit the JSON document in the popup to drive the live timeline below. We parse → validate → normalize on every keystroke so the UI never drifts from the source of truth.</p>
     </header>
-    <div class="hero-meta">
-        <dl>
-            <dt>Runtime</dt>
-            <dd>.NET 10 / Razor Pages</dd>
-        </dl>
-        <dl>
-            <dt>Front-end</dt>
-            <dd>Vanilla JS + CSS custom properties</dd>
-        </dl>
-        <dl>
-            <dt>Deploy</dt>
-            <dd>GitHub Actions → Azure Web App</dd>
-        </dl>
+    <div class="hero-side">
+        <div class="hero-meta">
+            <dl>
+                <dt>Runtime</dt>
+                <dd>.NET 10 / Razor Pages</dd>
+            </dl>
+            <dl>
+                <dt>Front-end</dt>
+                <dd>Vanilla JS + CSS custom properties</dd>
+            </dl>
+            <dl>
+                <dt>Deploy</dt>
+                <dd>GitHub Actions → Azure Web App</dd>
+            </dl>
+        </div>
+        <div class="hero-actions">
+            <button type="button" class="btn btn-secondary" data-action="open-json-modal">Open Timeline JSON</button>
+            <output data-role="timeline-status" class="status-badge" aria-live="polite">Waiting for input…</output>
+        </div>
     </div>
 </section>
 
-<section class="dashboard-grid">
-    <article class="panel panel-editor">
+<section class="panel panel-preview">
+    <header>
+        <div>
+            <h2>Live preview</h2>
+            <p>
+                Updates: <span data-role="timeline-updated">not rendered yet</span>
+            </p>
+        </div>
+        <div class="preview-actions">
+            <div class="button-group" role="group" aria-label="View mode toggle">
+                <span class="toolbar-label">Mode</span>
+                <button type="button" class="btn btn-outline-primary" data-view-mode="day">Day</button>
+                <button type="button" class="btn btn-outline-primary" data-view-mode="hour">Hour</button>
+            </div>
+            <div class="legend">
+                <span class="legend-item status-ok">Valid</span>
+                <span class="legend-item status-warning">Warning</span>
+                <span class="legend-item status-error">Error</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="alert alert-danger d-none" data-role="timeline-errors" role="alert"></div>
+
+    <div class="timeline-surface" data-role="timeline-canvas">
+        <p class="empty-state">Start typing or paste JSON to render the timeline.</p>
+    </div>
+</section>
+
+<dialog class="json-modal" data-role="timeline-json-modal" aria-labelledby="timeline-json-title">
+    <article class="panel panel-editor panel-editor-modal">
         <header>
             <div>
-                <h2>Timeline JSON</h2>
+                <h2 id="timeline-json-title">Timeline JSON</h2>
                 <p>Everything you see in the preview comes directly from this document. Keep <code>view</code>, <code>lanes</code>, and <code>items</code> aligned.</p>
             </div>
-            <output data-role="timeline-status" class="status-badge" aria-live="polite">Waiting for input…</output>
+            <button type="button" class="btn btn-outline-secondary modal-close" data-action="close-json-modal" aria-label="Close timeline JSON">Close</button>
         </header>
 
         <div class="editor-toolbar">
             <div class="button-group">
                 <button type="button" class="btn btn-secondary" data-action="format-json">Format</button>
                 <button type="button" class="btn btn-outline-secondary" data-action="reset-json">Reset</button>
-            </div>
-            <div class="button-group" role="group" aria-label="View mode toggle">
-                <span class="toolbar-label">Mode</span>
-                <button type="button" class="btn btn-outline-primary" data-view-mode="day">Day</button>
-                <button type="button" class="btn btn-outline-primary" data-view-mode="hour">Hour</button>
             </div>
         </div>
 
@@ -76,29 +106,7 @@
             </div>
         }
     </article>
-
-    <article class="panel panel-preview">
-        <header>
-            <div>
-                <h2>Live preview</h2>
-                <p>
-                    Updates: <span data-role="timeline-updated">not rendered yet</span>
-                </p>
-            </div>
-            <div class="legend">
-                <span class="legend-item status-ok">Valid</span>
-                <span class="legend-item status-warning">Warning</span>
-                <span class="legend-item status-error">Error</span>
-            </div>
-        </header>
-
-        <div class="alert alert-danger d-none" data-role="timeline-errors" role="alert"></div>
-
-        <div class="timeline-surface" data-role="timeline-canvas">
-            <p class="empty-state">Start typing or paste JSON to render the timeline.</p>
-        </div>
-    </article>
-</section>
+</dialog>
 
 <section class="panel panel-notes">
     <h3>Operator checklist</h3>

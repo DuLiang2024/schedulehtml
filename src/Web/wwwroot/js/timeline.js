@@ -7,6 +7,9 @@
     const updatedLabel = document.querySelector('[data-role="timeline-updated"]');
     const errorPanel = document.querySelector('[data-role="timeline-errors"]');
     const viewModeButtons = document.querySelectorAll('[data-view-mode]');
+    const jsonModal = document.querySelector('[data-role="timeline-json-modal"]');
+    const openModalButtons = document.querySelectorAll('[data-action="open-json-modal"]');
+    const closeModalButton = document.querySelector('[data-action="close-json-modal"]');
     const formatButton = document.querySelector('[data-action="format-json"]');
     const resetButton = document.querySelector('[data-action="reset-json"]');
 
@@ -356,7 +359,47 @@
         });
     }
 
+    function openJsonModal() {
+        if (!jsonModal || typeof jsonModal.showModal !== 'function' || jsonModal.open) {
+            return;
+        }
+
+        jsonModal.showModal();
+        editor.focus();
+        editor.setSelectionRange(editor.value.length, editor.value.length);
+    }
+
+    function closeJsonModal() {
+        if (!jsonModal || !jsonModal.open) {
+            return;
+        }
+
+        jsonModal.close();
+    }
+
     editor.addEventListener('input', handleInput);
+
+    openModalButtons.forEach((button) => {
+        button.addEventListener('click', openJsonModal);
+    });
+
+    if (closeModalButton) {
+        closeModalButton.addEventListener('click', closeJsonModal);
+    }
+
+    if (jsonModal) {
+        jsonModal.addEventListener('click', (event) => {
+            const bounds = jsonModal.getBoundingClientRect();
+            const clickedBackdrop = event.clientX < bounds.left
+                || event.clientX > bounds.right
+                || event.clientY < bounds.top
+                || event.clientY > bounds.bottom;
+
+            if (clickedBackdrop) {
+                closeJsonModal();
+            }
+        });
+    }
 
     if (formatButton) {
         formatButton.addEventListener('click', () => {

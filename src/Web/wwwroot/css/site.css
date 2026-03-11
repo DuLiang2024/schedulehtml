@@ -96,6 +96,7 @@ code {
 .page-hero {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 2rem;
   padding: 2rem;
   background: var(--panel);
@@ -112,6 +113,13 @@ code {
 .page-hero h1 {
   margin: 0.2rem 0;
   font-size: clamp(2rem, 4vw, 2.8rem);
+}
+
+.hero-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 320px;
 }
 
 .eyebrow {
@@ -147,17 +155,43 @@ code {
   font-weight: 600;
 }
 
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: minmax(360px, 0.95fr) minmax(360px, 1.05fr);
-  gap: 2rem;
-  align-items: flex-start;
+.hero-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-@media (max-width: 1100px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-  }
+.btn {
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn.btn-secondary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.btn.btn-outline-primary {
+  border-color: rgba(37, 99, 235, 0.4);
+  color: var(--accent);
+}
+
+.btn.btn-outline-secondary {
+  color: var(--muted);
+}
+
+.btn:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.4);
+  outline-offset: 2px;
 }
 
 .panel {
@@ -205,42 +239,13 @@ code {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 
-.button-group button {
-  padding: 0.45rem 1rem;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: #fff;
-  cursor: pointer;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.button-group button.is-active {
+.button-group .btn.is-active {
   background: var(--accent);
   color: #fff;
   border-color: var(--accent);
-}
-
-.button-group button.btn-outline-primary {
-  border-color: rgba(37, 99, 235, 0.4);
-  color: var(--accent);
-}
-
-.button-group button.btn-secondary {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
-}
-
-.button-group button.btn-outline-secondary {
-  color: var(--muted);
-}
-
-.button-group button:focus-visible {
-  outline: 3px solid rgba(37, 99, 235, 0.4);
-  outline-offset: 2px;
 }
 
 .toolbar-label {
@@ -275,6 +280,14 @@ code {
 
 .panel-preview header {
   align-items: center;
+}
+
+.preview-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
 .legend {
@@ -321,6 +334,29 @@ code {
 .status-badge[data-state="error"] {
   border-color: rgba(197, 48, 48, 0.4);
   color: var(--error);
+}
+
+.json-modal {
+  width: min(960px, calc(100vw - 2rem));
+  max-width: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.json-modal::backdrop {
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(6px);
+}
+
+.panel-editor-modal {
+  margin: 0;
+  max-height: calc(100vh - 3rem);
+  overflow: auto;
+}
+
+.modal-close {
+  flex-shrink: 0;
 }
 
 .timeline-surface {
@@ -459,6 +495,18 @@ code {
     flex-direction: column;
   }
 
+  .hero-side {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .preview-actions,
+  .panel-preview header,
+  .panel-editor header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
   .lane-label {
     width: 90px;
   }
@@ -473,5 +521,9 @@ code {
 
   .timeline-surface {
     padding: 1rem;
+  }
+
+  .json-modal {
+    width: calc(100vw - 1rem);
   }
 }
